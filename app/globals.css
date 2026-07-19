@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fafafa;
+  --bg-sidebar: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #f7f8f9;
+  --text: #1f2939;
+  --text-secondary: #6b7280;
+  --text-muted: #8b95a5;
+  --text-faint: #99a3b2;
+  --text-button: #354152;
+  --border: #e5e7eb;
+  --border-subtle: #eceef1;
+  --focus: #1f2939;
+  --scrollbar: #c5cbd3;
+  --scrollbar-track: transparent;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide native cursor when custom site cursor is active */
+html.has-site-cursor,
+html.has-site-cursor * {
+  cursor: none !important;
+}
+
+/* Minimal right-pane scrollbar (desktop workspace) */
+.portfolio-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar) var(--scrollbar-track);
+}
+
+.portfolio-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.portfolio-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.portfolio-scroll::-webkit-scrollbar-thumb {
+  background: var(--scrollbar);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
