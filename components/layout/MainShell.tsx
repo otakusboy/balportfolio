@@ -17,7 +17,7 @@ export function MainShell({ children }: Props) {
         </aside>
 
         <main
-          className="flex min-h-0 flex-1 flex-col bg-white px-4 pt-4 lg:h-full lg:px-0 lg:pt-0 lg:pl-5"
+          className="flex min-h-0 flex-1 flex-col bg-white px-4 pb-6 pt-4 lg:h-full lg:px-0 lg:pb-0 lg:pt-0 lg:pl-5"
           aria-label="Portfolio"
         >
           <div className="flex min-h-0 flex-1 flex-col lg:m-4">

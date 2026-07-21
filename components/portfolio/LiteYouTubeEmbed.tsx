@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 type Props = {
   videoId: string;
@@ -19,16 +20,8 @@ type Props = {
 export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const remotePoster = `https://i.ytimg.com/vi_webp/${videoId}/sddefault.webp`;
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduceMotion(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
 
   useEffect(() => {
     if (reduceMotion) return;
@@ -47,16 +40,7 @@ export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props
     return () => observer.disconnect();
   }, [reduceMotion]);
 
-  const embedSrc = [
-    `https://www.youtube-nocookie.com/embed/${videoId}`,
-    `?autoplay=1`,
-    `&mute=1`,
-    `&playsinline=1`,
-    `&rel=0`,
-    `&modestbranding=1`,
-    `&loop=1`,
-    `&playlist=${videoId}`,
-  ].join("");
+  const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=${videoId}`;
 
   return (
     <div

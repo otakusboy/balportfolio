@@ -10,11 +10,8 @@ import type { Project } from "@/types/project";
  * - twoUp         Two device frames side by side (set pairWith)
  * - editorial     Cover + optional second image from gallery[0]
  *
- * Media options:
- *   posterImage, mediaGradient, hidden, hideOnMobile
- *
- * hideOnMobile — set true to hide a card below the `lg` breakpoint
- * (tablet/phone). Desktop still shows it. Default: shown everywhere.
+ * Media options: posterImage, mediaGradient, hidden, hideOnMobile
+ * hideOnMobile — hide a card below the `lg` breakpoint (default: shown everywhere)
  */
 export const projects: Project[] = [
   {
@@ -23,8 +20,6 @@ export const projects: Project[] = [
     subtitle: "UI/UX Design & Redesign",
     year: "2024 - 2025",
     coverImage: "/images/projects/landing-page-works.jpg",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.youtube.com/watch?v=BpOYC8AsUpE",
     layoutVariant: "videoHero",
     youtubeId: "BpOYC8AsUpE",
@@ -35,8 +30,6 @@ export const projects: Project[] = [
     subtitle: "Finance AI Landing page. Featured by Muz.li.",
     year: "2026",
     coverImage: "/images/projects/circles.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl:
       "https://medium.muz.li/crafting-circles-designing-and-building-a-fintech-landing-page-in-framer-165d23bfa922",
     layoutVariant: "featuredWide",
@@ -47,8 +40,6 @@ export const projects: Project[] = [
     subtitle: "Legal AI Landing page. Built with Cursor",
     year: "2026",
     coverImage: "/images/projects/veridoc.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://veridoc-ai.netlify.app/",
     layoutVariant: "featuredWide",
   },
@@ -59,8 +50,6 @@ export const projects: Project[] = [
     year: "2026",
     coverImage: "/images/projects/calodrop.png",
     mobileImage: "/images/projects/calodrop.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
     pairWith: "charity-app",
@@ -73,8 +62,6 @@ export const projects: Project[] = [
     year: "2024",
     coverImage: "/images/projects/charity.png",
     mobileImage: "/images/projects/charity.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
     hideOnMobile: true,
@@ -85,20 +72,16 @@ export const projects: Project[] = [
     subtitle: "Web3 Landing page template",
     year: "2026",
     coverImage: "/images/projects/chainly.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://templates-chainly.framer.website/",
     layoutVariant: "featuredWide",
   },
   {
     id: "aimon",
     title: "AIMON",
-    subtitle: "Habbit tracker apps",
+    subtitle: "Habit tracker apps",
     year: "2024",
     coverImage: "/images/projects/aimon-mobile.png",
     mobileImage: "/images/projects/aimon-mobile.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
     pairWith: "velocity",
@@ -111,8 +94,6 @@ export const projects: Project[] = [
     year: "2025",
     coverImage: "/images/projects/velocity.png",
     mobileImage: "/images/projects/velocity.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
     hideOnMobile: true,
@@ -123,8 +104,6 @@ export const projects: Project[] = [
     subtitle: "Work Case Study",
     year: "2025",
     coverImage: "/images/projects/senior-cares.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl:
       "https://medium.com/@iqbalaqaba/ux-study-case-visual-refreshment-of-senior-care-website-61707ad2c3bd",
     layoutVariant: "editorial",
@@ -135,8 +114,6 @@ export const projects: Project[] = [
     subtitle: "Web3 Dashboard design",
     year: "2025",
     coverImage: "/images/projects/appreal.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "featuredWide",
   },
@@ -146,8 +123,6 @@ export const projects: Project[] = [
     subtitle: "Review blog redesign",
     year: "2024",
     coverImage: "/images/projects/housefresh.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://housefresh.com/",
     layoutVariant: "featuredWide",
   },
@@ -161,8 +136,6 @@ export const projects: Project[] = [
       "/images/projects/phoenix-tablet.png",
       "/images/projects/extra-2.png",
     ],
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.phoenixsoftware.io/real-estate-crm/",
     layoutVariant: "editorial",
   },
@@ -172,8 +145,6 @@ export const projects: Project[] = [
     subtitle: "Company profile redesign",
     year: "2025",
     coverImage: "/images/projects/traction.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://interactive-tour-821839.framer.app/",
     layoutVariant: "featuredWide",
   },
@@ -183,8 +154,6 @@ export const projects: Project[] = [
     subtitle: "Company profile design",
     year: "2026",
     coverImage: "/images/projects/hireamaid.png",
-    mediaInsetLeft: 20,
-    mediaInsetRight: 20,
     externalUrl: "https://www.hireamaid.sg/",
     layoutVariant: "featuredWide",
   },

@@ -1,4 +1,5 @@
 import type { Project } from "@/types/project";
+import { cn } from "@/lib/cn";
 
 type Props = {
   project: Project;
@@ -7,9 +8,7 @@ type Props = {
 
 export function PortfolioMeta({ project, className }: Props) {
   return (
-    <div
-      className={`mt-3 flex items-start justify-between gap-4 px-0.5 ${className ?? ""}`}
-    >
+    <div className={cn("mt-3 flex items-start justify-between gap-4 px-0.5", className)}>
       <div className="min-w-0">
         <h3 className="truncate text-[15px] font-semibold leading-tight tracking-[-0.01em] text-[var(--text)]">
           {project.title}

@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion, useMotionValue } from "motion/react";
+import {
+  FINE_POINTER_QUERY,
+  useIsClient,
+  useMediaQuery,
+} from "@/lib/use-media-query";
 
 const visitStore = {
   active: false,
@@ -30,27 +35,18 @@ function useVisitCursorActive() {
   );
 }
 
-/**
- * Site-wide 32px circular cursor with a slight soft shadow.
- * Hidden while the Visit Website pill is active.
- */
+/** Site-wide 32px circular cursor. Hidden while the Visit Website pill is active. */
 export function SiteCursor() {
-  const [mounted, setMounted] = useState(false);
-  const [finePointer, setFinePointer] = useState(false);
+  const mounted = useIsClient();
+  const finePointer = useMediaQuery(FINE_POINTER_QUERY);
   const visitActive = useVisitCursorActive();
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
 
   useEffect(() => {
-    setMounted(true);
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const sync = () => {
-      const ok = mq.matches;
-      setFinePointer(ok);
-      document.documentElement.classList.toggle("has-site-cursor", ok);
-    };
-    sync();
-    mq.addEventListener("change", sync);
+    document.documentElement.classList.toggle("has-site-cursor", finePointer);
+
+    if (!finePointer) return;
 
     const onMove = (e: MouseEvent) => {
       x.set(e.clientX);
@@ -59,11 +55,10 @@ export function SiteCursor() {
     window.addEventListener("mousemove", onMove, { passive: true });
 
     return () => {
-      mq.removeEventListener("change", sync);
       window.removeEventListener("mousemove", onMove);
       document.documentElement.classList.remove("has-site-cursor");
     };
-  }, [x, y]);
+  }, [finePointer, x, y]);
 
   if (!mounted || !finePointer) return null;
 

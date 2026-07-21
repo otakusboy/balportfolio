@@ -5,32 +5,24 @@ import { createPortal } from "react-dom";
 import { motion, useMotionValue } from "motion/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { setVisitCursorActive } from "@/components/cursor/SiteCursor";
+import {
+  FINE_POINTER_QUERY,
+  useIsClient,
+  useMediaQuery,
+} from "@/lib/use-media-query";
 
 type Props = {
   children: ReactNode;
   label?: string;
 };
 
-/**
- * Replaces the cursor over linked project media with a “Visit Website” pill.
- * Rendered in a portal with fixed positioning so overflow parents can't crop it.
- */
+/** Replaces the cursor over linked project media with a “Visit Website” pill. */
 export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
+  const mounted = useIsClient();
+  const finePointer = useMediaQuery(FINE_POINTER_QUERY);
   const [active, setActive] = useState(false);
-  const [finePointer, setFinePointer] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  // Keep off-screen until the first real pointer position is known
   const x = useMotionValue(-9999);
   const y = useMotionValue(-9999);
-
-  useEffect(() => {
-    setMounted(true);
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const sync = () => setFinePointer(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
 
   useEffect(() => {
     setVisitCursorActive(active);

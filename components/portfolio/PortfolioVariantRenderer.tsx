@@ -5,11 +5,10 @@ import { projectCoverProps } from "@/lib/project-media";
 
 type Props = {
   project: Project;
-  pair?: Project;
   priority?: boolean;
 };
 
-export function PortfolioVariantRenderer({ project, pair, priority }: Props) {
+export function PortfolioVariantRenderer({ project, priority }: Props) {
   switch (project.layoutVariant) {
     case "videoHero":
       return (
@@ -21,13 +20,8 @@ export function PortfolioVariantRenderer({ project, pair, priority }: Props) {
       );
 
     case "twoUp":
-      if (!pair) return <WideCover project={project} priority={priority} />;
-      return (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-          <DeviceCover project={project} priority={priority} />
-          <DeviceCover project={pair} />
-        </div>
-      );
+      // PortfolioCard handles paired twoUp layouts; this is the fallback for a missing partner
+      return <WideCover project={project} priority={priority} />;
 
     case "deviceMockup":
       return <DeviceCover project={project} priority={priority} />;
