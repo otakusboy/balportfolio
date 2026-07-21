@@ -19,8 +19,8 @@ function BrandSet({ brands, suffix }: { brands: BrandLogo[]; suffix: string }) {
             src={brand.src}
             alt={suffix === "a" ? brand.name : ""}
             width={160}
-            height={48}
-            className="h-12 w-auto max-w-40 shrink-0 object-contain"
+            height={40}
+            className="h-10 max-h-10 w-auto max-w-40 shrink-0 object-contain"
             draggable={false}
           />
         </li>

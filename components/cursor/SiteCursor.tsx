@@ -64,7 +64,7 @@ export function SiteCursor() {
 
   return createPortal(
     <motion.div
-      className="pointer-events-none fixed z-[9998] h-8 w-8 rounded-full bg-[var(--text)] shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+      className="pointer-events-none fixed z-[9998] h-6 w-6 rounded-full bg-[var(--text)] shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
       style={{ left: x, top: y, x: "-50%", y: "-50%" }}
       initial={false}
       animate={{

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { ProfileSidebar } from "@/components/layout/ProfileSidebar";
 
 type Props = {
@@ -17,16 +18,17 @@ export function MainShell({ children }: Props) {
         </aside>
 
         <main
-          className="flex min-h-0 flex-1 flex-col bg-white px-4 pb-6 pt-4 lg:h-full lg:px-0 lg:pb-0 lg:pt-0 lg:pl-5"
+          className="flex min-h-0 flex-1 flex-col bg-white pb-6 pt-4 lg:h-full lg:pb-0 lg:pt-0 lg:pl-5"
           aria-label="Portfolio"
         >
           <div className="flex min-h-0 flex-1 flex-col lg:m-4">
-            <div className="portfolio-scroll min-h-0 flex-1 overflow-y-auto lg:rounded-[5px] lg:border lg:border-[var(--border-subtle)] lg:bg-[#f8f9fc] lg:p-5">
+            <div className="portfolio-scroll min-h-0 flex-1 overflow-y-auto p-8 lg:rounded-[5px] lg:border lg:border-[var(--border-subtle)] lg:bg-[#f8f9fc]">
               {children}
             </div>
           </div>
         </main>
       </div>
+      <BackToTop />
     </div>
   );
 }

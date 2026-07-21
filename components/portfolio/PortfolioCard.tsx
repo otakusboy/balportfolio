@@ -12,6 +12,10 @@ type Props = {
   priority?: boolean;
 };
 
+function hasExternalLink(project: Project) {
+  return Boolean(project.externalUrl?.trim());
+}
+
 export function PortfolioCard({ project, pair, priority }: Props) {
   if (project.layoutVariant === "twoUp" && pair) {
     const bothHiddenOnMobile = project.hideOnMobile && pair.hideOnMobile;
@@ -34,6 +38,7 @@ export function PortfolioCard({ project, pair, priority }: Props) {
 
 function LinkedItem({ project, priority }: { project: Project; priority?: boolean }) {
   const mobileClass = project.hideOnMobile ? "max-lg:hidden" : undefined;
+  const linked = hasExternalLink(project);
 
   if (project.youtubeId) {
     return (
@@ -44,18 +49,29 @@ function LinkedItem({ project, priority }: { project: Project; priority?: boolea
     );
   }
 
+  const media = <PortfolioVariantRenderer project={project} priority={priority} />;
+
+  if (!linked) {
+    return (
+      <article className={mobileClass}>
+        <div className="group block rounded-[10px]">
+          {media}
+          <PortfolioMeta project={project} />
+        </div>
+      </article>
+    );
+  }
+
   return (
     <article className={mobileClass}>
       <a
         href={project.externalUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group block rounded-[2px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
+        className="group block rounded-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
         aria-label={`${project.title} — opens in a new tab`}
       >
-        <MediaVisitCursor>
-          <PortfolioVariantRenderer project={project} priority={priority} />
-        </MediaVisitCursor>
+        <MediaVisitCursor>{media}</MediaVisitCursor>
         <PortfolioMeta project={project} />
       </a>
     </article>

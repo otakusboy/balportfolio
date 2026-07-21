@@ -1,22 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
-import { DEFAULT_MEDIA_GRADIENT } from "@/lib/project-media";
+import type { MediaObjectPositionValue } from "@/types/project";
+import { DEFAULT_MEDIA_BACKGROUND, DEFAULT_MEDIA_INSET, resolveObjectPosition } from "@/lib/project-media";
 
 /** High-quality delivery for portfolio covers (AVIF/WebP via next/image). */
 const COVER_IMAGE_QUALITY = 90;
 
 type Props = {
-  src: string;
-  alt: string;
+  /** Full-bleed cover shown before hover (optional) */
   coverSrc?: string;
+  /** Original project image — padded inset; shown on hover or alone */
+  originalSrc: string;
+  alt: string;
   gradient?: string;
   priority?: boolean;
   sizes?: string;
   aspectClass?: string;
   fit?: "cover" | "contain";
-  position?: "center" | "left" | "right";
+  objectPosition?: MediaObjectPositionValue;
   insetLeft?: number;
   insetRight?: number;
   className?: string;
@@ -24,59 +28,69 @@ type Props = {
 };
 
 export function ProjectCover({
-  src,
-  alt,
   coverSrc,
-  gradient = DEFAULT_MEDIA_GRADIENT,
+  originalSrc,
+  alt,
+  gradient,
   priority = false,
   sizes = "(max-width: 1024px) 100vw, 58vw",
   aspectClass = "aspect-[16/11]",
   fit = "cover",
-  position = "center",
-  insetLeft = 20,
-  insetRight = 20,
+  objectPosition,
+  insetLeft = DEFAULT_MEDIA_INSET,
+  insetRight = DEFAULT_MEDIA_INSET,
   className,
   imageClassName,
 }: Props) {
   const fitClass = fit === "contain" ? "object-contain" : "object-cover";
-  const positionClass =
-    position === "left" ? "object-left" : position === "right" ? "object-right" : "object-center";
+  const { className: positionClass, style: positionStyle } = resolveObjectPosition(objectPosition);
 
-  const hasPoster = Boolean(coverSrc);
-  const coverPriority = priority && !hasPoster;
+  const hasCover = Boolean(coverSrc);
+  const reduceMotion = useReducedMotion();
+  const zoomOnHover = !hasCover && !reduceMotion;
+
+  const backgroundStyle = gradient
+    ? { backgroundImage: gradient }
+    : { backgroundColor: DEFAULT_MEDIA_BACKGROUND };
+
+  const imageProps = {
+    sizes,
+    fitClass,
+    positionClass,
+    positionStyle,
+    imageClassName,
+  };
 
   return (
     <div
-      className={cn("relative w-full overflow-hidden rounded-[2px]", aspectClass, className)}
-      style={{ backgroundImage: gradient }}
+      className={cn("relative w-full overflow-hidden rounded-[10px]", aspectClass, className)}
+      style={backgroundStyle}
     >
-      <div
-        className="absolute inset-y-0 transition-transform duration-500 ease-out group-hover:scale-105"
+      {hasCover ? (
+        <div className="absolute inset-0 z-10 group-hover:hidden">
+          <CoverImage src={coverSrc!} alt="" {...imageProps} />
+        </div>
+      ) : null}
+
+      <motion.div
+        className={cn(
+          "absolute inset-y-0 origin-center",
+          hasCover && "z-0 hidden group-hover:block",
+        )}
         style={{ left: insetLeft, right: insetRight }}
+        initial={false}
+        whileHover={zoomOnHover ? { scale: 1.05 } : undefined}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <CoverImage
-          src={src}
-          alt={alt}
-          sizes={sizes}
-          priority={coverPriority}
-          fitClass={fitClass}
-          positionClass={positionClass}
-          visible={!hasPoster}
-          imageClassName={imageClassName}
-        />
-        {coverSrc ? (
+        <div className="absolute inset-0">
           <CoverImage
-            src={coverSrc}
-            alt=""
-            sizes={sizes}
-            fitClass={fitClass}
-            positionClass={positionClass}
-            visible
-            hideOnHover
-            imageClassName={imageClassName}
+            src={originalSrc}
+            alt={alt}
+            priority={priority}
+            {...imageProps}
           />
-        ) : null}
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
@@ -88,8 +102,7 @@ function CoverImage({
   priority = false,
   fitClass,
   positionClass,
-  visible,
-  hideOnHover,
+  positionStyle,
   imageClassName,
 }: {
   src: string;
@@ -97,9 +110,8 @@ function CoverImage({
   sizes: string;
   priority?: boolean;
   fitClass: string;
-  positionClass: string;
-  visible: boolean;
-  hideOnHover?: boolean;
+  positionClass?: string;
+  positionStyle?: { objectPosition: string };
   imageClassName?: string;
 }) {
   return (
@@ -111,14 +123,8 @@ function CoverImage({
       quality={COVER_IMAGE_QUALITY}
       priority={priority}
       loading={priority ? undefined : "lazy"}
-      className={cn(
-        fitClass,
-        positionClass,
-        "transition-opacity duration-500 ease-out",
-        visible ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-        hideOnHover && "group-hover:opacity-0",
-        imageClassName,
-      )}
+      className={cn(fitClass, positionClass, imageClassName)}
+      style={positionStyle}
       aria-hidden={alt === ""}
     />
   );

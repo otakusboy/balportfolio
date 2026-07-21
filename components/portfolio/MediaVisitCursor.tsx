@@ -46,19 +46,19 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
   const pill =
     mounted && finePointer && active
       ? createPortal(
-          <motion.div
-            className="pointer-events-none fixed z-[9999]"
-            style={{ left: x, top: y, x: "-50%", y: "-50%" }}
-            initial={false}
-            aria-hidden
-          >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-2 text-[13px] font-medium leading-none tracking-[-0.01em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
-              {label}
-              <ArrowUpRight size={14} weight="bold" aria-hidden />
-            </span>
-          </motion.div>,
-          document.body,
-        )
+        <motion.div
+          className="pointer-events-none fixed z-[9999]"
+          style={{ left: x, top: y, x: "-50%", y: "-50%" }}
+          initial={false}
+          aria-hidden
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-3 text-[13px] font-medium leading-none tracking-[-0.01em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
+            {label}
+            <ArrowUpRight size={12} weight="bold" aria-hidden />
+          </span>
+        </motion.div>,
+        document.body,
+      )
       : null;
 
   return (

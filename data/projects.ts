@@ -10,8 +10,24 @@ import type { Project } from "@/types/project";
  * - twoUp         Two device frames side by side (set pairWith)
  * - editorial     Cover + optional second image from gallery[0]
  *
- * Media options: posterImage, mediaGradient, hidden, hideOnMobile
- * hideOnMobile — hide a card below the `lg` breakpoint (default: shown everywhere)
+ * Images:
+ * - originalImage  Project image with inset padding (shown alone, or on hover)
+ * - coverImage     Optional full-bleed cover shown before hover
+ *
+ * Media options:
+ * - mediaGradient         Custom background gradient (default: solid #eef2f6)
+ * - mediaInsetLeft/Right  Inset for originalImage only in px (default: 20)
+ * - mediaObjectPosition   How the image fills its frame (default: "top")
+ * - hidden                Remove from the list without deleting
+ * - hideOnMobile          Hide below the `lg` breakpoint
+ *
+ * externalUrl — omit to show the card without a link or visit cursor.
+ *
+ * mediaObjectPosition — presets: center, top, bottom, left, right,
+ *   top-left, top-right, bottom-left, bottom-right.
+ *   String: "top right", "50% 0%".
+ *   Tuple: ["right", "bottom"] for horizontal + vertical.
+ *   Device mockups default to "left" unless overridden.
  */
 export const projects: Project[] = [
   {
@@ -19,7 +35,7 @@ export const projects: Project[] = [
     title: "Landing page works",
     subtitle: "UI/UX Design & Redesign",
     year: "2024 - 2025",
-    coverImage: "/images/projects/landing-page-works.jpg",
+    originalImage: "/images/projects/landing-page-works.jpg",
     externalUrl: "https://www.youtube.com/watch?v=BpOYC8AsUpE",
     layoutVariant: "videoHero",
     youtubeId: "BpOYC8AsUpE",
@@ -29,7 +45,7 @@ export const projects: Project[] = [
     title: "Circles",
     subtitle: "Finance AI Landing page. Featured by Muz.li.",
     year: "2026",
-    coverImage: "/images/projects/circles.png",
+    originalImage: "/images/projects/circles.png",
     externalUrl:
       "https://medium.muz.li/crafting-circles-designing-and-building-a-fintech-landing-page-in-framer-165d23bfa922",
     layoutVariant: "featuredWide",
@@ -39,7 +55,7 @@ export const projects: Project[] = [
     title: "Veridoc",
     subtitle: "Legal AI Landing page. Built with Cursor",
     year: "2026",
-    coverImage: "/images/projects/veridoc.png",
+    originalImage: "/images/projects/veridoc.png",
     externalUrl: "https://veridoc-ai.netlify.app/",
     layoutVariant: "featuredWide",
   },
@@ -48,19 +64,19 @@ export const projects: Project[] = [
     title: "Calodrop",
     subtitle: "iOS App Design",
     year: "2026",
-    coverImage: "/images/projects/calodrop.png",
+    originalImage: "/images/projects/calodrop.png",
     mobileImage: "/images/projects/calodrop.png",
-    externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
     pairWith: "charity-app",
     hideOnMobile: true,
+    mediaObjectPosition: ["right", "bottom"],
   },
   {
     id: "charity-app",
     title: "Charity App",
     subtitle: "iOS App design",
     year: "2024",
-    coverImage: "/images/projects/charity.png",
+    originalImage: "/images/projects/charity.png",
     mobileImage: "/images/projects/charity.png",
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
@@ -71,7 +87,7 @@ export const projects: Project[] = [
     title: "Chainly",
     subtitle: "Web3 Landing page template",
     year: "2026",
-    coverImage: "/images/projects/chainly.png",
+    originalImage: "/images/projects/chainly.png",
     externalUrl: "https://templates-chainly.framer.website/",
     layoutVariant: "featuredWide",
   },
@@ -80,7 +96,7 @@ export const projects: Project[] = [
     title: "AIMON",
     subtitle: "Habit tracker apps",
     year: "2024",
-    coverImage: "/images/projects/aimon-mobile.png",
+    originalImage: "/images/projects/aimon-mobile.png",
     mobileImage: "/images/projects/aimon-mobile.png",
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
@@ -92,7 +108,7 @@ export const projects: Project[] = [
     title: "Velocity",
     subtitle: "iOS App Design",
     year: "2025",
-    coverImage: "/images/projects/velocity.png",
+    originalImage: "/images/projects/velocity.png",
     mobileImage: "/images/projects/velocity.png",
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
@@ -104,6 +120,7 @@ export const projects: Project[] = [
     subtitle: "Work Case Study",
     year: "2025",
     coverImage: "/images/projects/senior-cares.png",
+    originalImage: "/images/projects/senior-cares.png",
     externalUrl:
       "https://medium.com/@iqbalaqaba/ux-study-case-visual-refreshment-of-senior-care-website-61707ad2c3bd",
     layoutVariant: "editorial",
@@ -113,7 +130,7 @@ export const projects: Project[] = [
     title: "Appreal",
     subtitle: "Web3 Dashboard design",
     year: "2025",
-    coverImage: "/images/projects/appreal.png",
+    originalImage: "/images/projects/appreal.png",
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "featuredWide",
   },
@@ -122,7 +139,7 @@ export const projects: Project[] = [
     title: "Housefresh",
     subtitle: "Review blog redesign",
     year: "2024",
-    coverImage: "/images/projects/housefresh.png",
+    originalImage: "/images/projects/housefresh.png",
     externalUrl: "https://housefresh.com/",
     layoutVariant: "featuredWide",
   },
@@ -131,11 +148,8 @@ export const projects: Project[] = [
     title: "Phoenix",
     subtitle: "AI property appraisal",
     year: "2024",
-    coverImage: "/images/projects/phoenix.png",
-    gallery: [
-      "/images/projects/phoenix-tablet.png",
-      "/images/projects/extra-2.png",
-    ],
+    coverImage: "/images/projects/extra-2.png",
+    originalImage: "/images/projects/phoenix.png",
     externalUrl: "https://www.phoenixsoftware.io/real-estate-crm/",
     layoutVariant: "editorial",
   },
@@ -144,7 +158,7 @@ export const projects: Project[] = [
     title: "Traction Energy Asia",
     subtitle: "Company profile redesign",
     year: "2025",
-    coverImage: "/images/projects/traction.png",
+    originalImage: "/images/projects/traction.png",
     externalUrl: "https://interactive-tour-821839.framer.app/",
     layoutVariant: "featuredWide",
   },
@@ -153,7 +167,7 @@ export const projects: Project[] = [
     title: "HireAMaid",
     subtitle: "Company profile design",
     year: "2026",
-    coverImage: "/images/projects/hireamaid.png",
+    originalImage: "/images/projects/hireamaid.png",
     externalUrl: "https://www.hireamaid.sg/",
     layoutVariant: "featuredWide",
   },

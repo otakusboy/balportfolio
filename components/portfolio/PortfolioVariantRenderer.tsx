@@ -1,7 +1,7 @@
 import type { Project } from "@/types/project";
 import { LiteYouTubeEmbed } from "@/components/portfolio/LiteYouTubeEmbed";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
-import { projectCoverProps } from "@/lib/project-media";
+import { projectCoverProps, DEFAULT_MEDIA_INSET } from "@/lib/project-media";
 
 type Props = {
   project: Project;
@@ -15,12 +15,11 @@ export function PortfolioVariantRenderer({ project, priority }: Props) {
         <LiteYouTubeEmbed
           videoId={project.youtubeId ?? ""}
           title={project.title}
-          posterSrc={project.coverImage}
+          posterSrc={project.originalImage}
         />
       );
 
     case "twoUp":
-      // PortfolioCard handles paired twoUp layouts; this is the fallback for a missing partner
       return <WideCover project={project} priority={priority} />;
 
     case "deviceMockup":
@@ -28,15 +27,17 @@ export function PortfolioVariantRenderer({ project, priority }: Props) {
 
     case "editorial":
       return (
-        <div className="overflow-hidden rounded-[2px]">
+        <div className="overflow-hidden rounded-[10px]">
           <WideCover project={project} priority={priority} alt={`${project.title} cover`} />
           {project.gallery?.[0] ? (
             <ProjectCover
-              src={project.gallery[0]}
+              originalSrc={project.gallery[0]}
               alt={`${project.title} detail`}
               aspectClass="aspect-[16/10]"
               className="border-t border-[var(--border-subtle)]"
-              {...projectCoverProps(project)}
+              insetLeft={project.mediaInsetLeft ?? DEFAULT_MEDIA_INSET}
+              insetRight={project.mediaInsetRight ?? DEFAULT_MEDIA_INSET}
+              gradient={project.mediaGradient}
             />
           ) : null}
         </div>
@@ -59,7 +60,6 @@ function WideCover({
 }) {
   return (
     <ProjectCover
-      src={project.coverImage}
       alt={alt ?? `${project.title} preview`}
       priority={priority}
       {...projectCoverProps(project)}
@@ -70,14 +70,16 @@ function WideCover({
 function DeviceCover({ project, priority }: { project: Project; priority?: boolean }) {
   return (
     <ProjectCover
-      src={project.mobileImage ?? project.coverImage}
       alt={`${project.title} device preview`}
       priority={priority}
       aspectClass="aspect-[4/5] sm:aspect-[3/4]"
       sizes="(max-width: 640px) 100vw, 28vw"
       fit="cover"
-      position="left"
       {...projectCoverProps(project)}
+      originalSrc={project.mobileImage ?? project.originalImage}
+      insetLeft={project.mediaInsetLeft ?? 0}
+      insetRight={project.mediaInsetRight ?? 0}
+      objectPosition={project.mediaObjectPosition ?? "left"}
     />
   );
 }

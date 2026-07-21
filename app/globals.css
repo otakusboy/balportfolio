@@ -63,6 +63,7 @@ html.has-site-cursor * {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -83,4 +84,8 @@ html.has-site-cursor * {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+.btn-contact {
+  border: 1.5px solid #e3e3e3;
 }
