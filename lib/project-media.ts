@@ -5,6 +5,9 @@ export const DEFAULT_MEDIA_BACKGROUND = "#eef2f6";
 /** Default inset for originalImage (padded inside the frame). Cover is always full bleed. */
 export const DEFAULT_MEDIA_INSET = 20;
 
+/** Default vertical inset for originalImage. Horizontal default is DEFAULT_MEDIA_INSET. */
+export const DEFAULT_MEDIA_INSET_VERTICAL = 0;
+
 export const DEFAULT_MEDIA_OBJECT_POSITION: MediaObjectPosition = "top";
 
 const OBJECT_POSITION_CLASS: Record<MediaObjectPosition, string> = {
@@ -45,6 +48,9 @@ export function projectCoverProps(project: Project) {
     gradient: project.mediaGradient,
     insetLeft: project.mediaInsetLeft ?? DEFAULT_MEDIA_INSET,
     insetRight: project.mediaInsetRight ?? DEFAULT_MEDIA_INSET,
+    insetTop: project.mediaInsetTop ?? DEFAULT_MEDIA_INSET_VERTICAL,
+    insetBottom: project.mediaInsetBottom ?? DEFAULT_MEDIA_INSET_VERTICAL,
     objectPosition: project.mediaObjectPosition,
+    fit: project.mediaFit ?? "cover",
   };
 }

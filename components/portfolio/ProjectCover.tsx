@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
 import type { MediaObjectPositionValue } from "@/types/project";
-import { DEFAULT_MEDIA_BACKGROUND, DEFAULT_MEDIA_INSET, resolveObjectPosition } from "@/lib/project-media";
+import { DEFAULT_MEDIA_BACKGROUND, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL, resolveObjectPosition } from "@/lib/project-media";
 
 /** High-quality delivery for portfolio covers (AVIF/WebP via next/image). */
 const COVER_IMAGE_QUALITY = 90;
@@ -23,6 +23,8 @@ type Props = {
   objectPosition?: MediaObjectPositionValue;
   insetLeft?: number;
   insetRight?: number;
+  insetTop?: number;
+  insetBottom?: number;
   className?: string;
   imageClassName?: string;
 };
@@ -39,6 +41,8 @@ export function ProjectCover({
   objectPosition,
   insetLeft = DEFAULT_MEDIA_INSET,
   insetRight = DEFAULT_MEDIA_INSET,
+  insetTop = DEFAULT_MEDIA_INSET_VERTICAL,
+  insetBottom = DEFAULT_MEDIA_INSET_VERTICAL,
   className,
   imageClassName,
 }: Props) {
@@ -74,10 +78,15 @@ export function ProjectCover({
 
       <motion.div
         className={cn(
-          "absolute inset-y-0 origin-center",
+          "absolute origin-center",
           hasCover && "z-0 hidden group-hover:block",
         )}
-        style={{ left: insetLeft, right: insetRight }}
+        style={{
+          top: insetTop,
+          right: insetRight,
+          bottom: insetBottom,
+          left: insetLeft,
+        }}
         initial={false}
         whileHover={zoomOnHover ? { scale: 1.05 } : undefined}
         transition={{ duration: 0.3, ease: "easeOut" }}

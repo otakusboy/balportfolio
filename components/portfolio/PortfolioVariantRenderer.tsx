@@ -1,7 +1,7 @@
 import type { Project } from "@/types/project";
 import { LiteYouTubeEmbed } from "@/components/portfolio/LiteYouTubeEmbed";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
-import { projectCoverProps, DEFAULT_MEDIA_INSET } from "@/lib/project-media";
+import { projectCoverProps, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL } from "@/lib/project-media";
 
 type Props = {
   project: Project;
@@ -37,6 +37,8 @@ export function PortfolioVariantRenderer({ project, priority }: Props) {
               className="border-t border-[var(--border-subtle)]"
               insetLeft={project.mediaInsetLeft ?? DEFAULT_MEDIA_INSET}
               insetRight={project.mediaInsetRight ?? DEFAULT_MEDIA_INSET}
+              insetTop={project.mediaInsetTop ?? DEFAULT_MEDIA_INSET_VERTICAL}
+              insetBottom={project.mediaInsetBottom ?? DEFAULT_MEDIA_INSET_VERTICAL}
               gradient={project.mediaGradient}
             />
           ) : null}
@@ -79,6 +81,8 @@ function DeviceCover({ project, priority }: { project: Project; priority?: boole
       originalSrc={project.mobileImage ?? project.originalImage}
       insetLeft={project.mediaInsetLeft ?? 0}
       insetRight={project.mediaInsetRight ?? 0}
+      insetTop={project.mediaInsetTop ?? 0}
+      insetBottom={project.mediaInsetBottom ?? 0}
       objectPosition={project.mediaObjectPosition ?? "left"}
     />
   );

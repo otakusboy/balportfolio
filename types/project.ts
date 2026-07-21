@@ -42,9 +42,11 @@ export type Project = {
   pairWith?: string;
   /** Optional CSS gradient override; defaults to solid #eef2f6 when omitted */
   mediaGradient?: string;
-  /** Inset for originalImage only (px). Default: 20. Cover is always full bleed. */
+  /** Inset for originalImage only (px). Default: 20 left/right, 0 top/bottom. Cover is always full bleed. */
   mediaInsetLeft?: number;
   mediaInsetRight?: number;
+  mediaInsetTop?: number;
+  mediaInsetBottom?: number;
   /**
    * How the image fills its frame (CSS object-position). Default: "top".
    * Presets: center, top, bottom, left, right, top-left, top-right, bottom-left, bottom-right.
@@ -52,6 +54,11 @@ export type Project = {
    * Tuple: ["right", "bottom"] for horizontal + vertical.
    */
   mediaObjectPosition?: MediaObjectPositionValue;
+  /**
+   * How the image scales inside its inset frame. Default: "cover" (fills & crops).
+   * Use "contain" for dashboard/UI screenshots — keeps aspect ratio, centered with side padding.
+   */
+  mediaFit?: "cover" | "contain";
   /** Hide from the portfolio list without deleting */
   hidden?: boolean;
   /**

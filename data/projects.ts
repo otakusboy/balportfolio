@@ -17,9 +17,20 @@ import type { Project } from "@/types/project";
  * Media options:
  * - mediaGradient         Custom background gradient (default: solid #eef2f6)
  * - mediaInsetLeft/Right  Inset for originalImage only in px (default: 20)
+ * - mediaInsetTop/Bottom   Inset for originalImage only in px (default: 0)
  * - mediaObjectPosition   How the image fills its frame (default: "top")
+ * - mediaFit              "cover" (default, fills & crops) or "contain" (keeps ratio)
  * - hidden                Remove from the list without deleting
  * - hideOnMobile          Hide below the `lg` breakpoint
+ *
+ * Dashboard / UI screenshots (e.g. Appreal):
+ * Every card uses a fixed 16:11 frame with #eef2f6 background. The image sits
+ * inside with 20px left/right inset by default. For a single dashboard screen:
+ *   mediaFit: "contain"
+ *   mediaObjectPosition: "center"
+ * Optional: increase mediaInsetLeft/Right or mediaInsetTop/Bottom for more breathing room.
+ * Export wide (16:10 or 16:9) — letterboxing above/below is filled by the frame bg.
+ * Landing pages & mockups: keep defaults (cover + top) so they fill the frame.
  *
  * externalUrl — omit to show the card without a link or visit cursor.
  *
@@ -131,8 +142,11 @@ export const projects: Project[] = [
     subtitle: "Web3 Dashboard design",
     year: "2025",
     originalImage: "/images/projects/appreal.png",
-    externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "featuredWide",
+    mediaFit: "contain",
+    mediaObjectPosition: "center",
+    mediaInsetTop: 40,
+    mediaInsetBottom: 40,
   },
   {
     id: "housefresh",
