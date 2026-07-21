@@ -4,6 +4,9 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 import { DEFAULT_MEDIA_GRADIENT } from "@/lib/project-media";
 
+/** High-quality delivery for portfolio covers (AVIF/WebP via next/image). */
+const COVER_IMAGE_QUALITY = 90;
+
 type Props = {
   src: string;
   alt: string;
@@ -39,6 +42,9 @@ export function ProjectCover({
   const positionClass =
     position === "left" ? "object-left" : position === "right" ? "object-right" : "object-center";
 
+  const hasPoster = Boolean(coverSrc);
+  const coverPriority = priority && !hasPoster;
+
   return (
     <div
       className={cn("relative w-full overflow-hidden rounded-[2px]", aspectClass, className)}
@@ -52,10 +58,10 @@ export function ProjectCover({
           src={src}
           alt={alt}
           sizes={sizes}
-          priority={priority && !coverSrc}
+          priority={coverPriority}
           fitClass={fitClass}
           positionClass={positionClass}
-          visible={!coverSrc}
+          visible={!hasPoster}
           imageClassName={imageClassName}
         />
         {coverSrc ? (
@@ -63,10 +69,9 @@ export function ProjectCover({
             src={coverSrc}
             alt=""
             sizes={sizes}
-            priority={priority}
             fitClass={fitClass}
             positionClass={positionClass}
-            visible={false}
+            visible
             hideOnHover
             imageClassName={imageClassName}
           />
@@ -80,7 +85,7 @@ function CoverImage({
   src,
   alt,
   sizes,
-  priority,
+  priority = false,
   fitClass,
   positionClass,
   visible,
@@ -103,8 +108,9 @@ function CoverImage({
       alt={alt}
       fill
       sizes={sizes}
-      quality={90}
+      quality={COVER_IMAGE_QUALITY}
       priority={priority}
+      loading={priority ? undefined : "lazy"}
       className={cn(
         fitClass,
         positionClass,

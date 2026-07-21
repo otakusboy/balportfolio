@@ -28,4 +28,9 @@ export type Project = {
   mediaInsetRight?: number;
   /** Hide from the portfolio list without deleting */
   hidden?: boolean;
+  /**
+   * Hide this card on tablet/mobile (below `lg`).
+   * Still visible on desktop. Defaults to false (shown).
+   */
+  hideOnMobile?: boolean;
 };

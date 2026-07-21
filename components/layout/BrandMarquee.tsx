@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import type { BrandLogo } from "@/types/profile";
 
 type Props = {
@@ -29,7 +30,37 @@ function BrandSet({ brands, suffix }: { brands: BrandLogo[]; suffix: string }) {
 }
 
 export function BrandMarquee({ brands, label }: Props) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [loopWidth, setLoopWidth] = useState(0);
+  const reduceMotion = useReducedMotion();
+
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      // Track contains two identical sets — scroll one set width for a seamless loop
+      setLoopWidth(track.scrollWidth / 2);
+    };
+
+    measure();
+
+    const images = track.querySelectorAll("img");
+    images.forEach((img) => img.addEventListener("load", measure));
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+
+    return () => {
+      images.forEach((img) => img.removeEventListener("load", measure));
+      observer.disconnect();
+    };
+  }, [brands]);
+
   if (brands.length === 0) return null;
+
+  const duration = Math.max(12, brands.length * 4);
+  const shouldAnimate = loopWidth > 0 && !reduceMotion;
 
   return (
     <div>
@@ -39,16 +70,15 @@ export function BrandMarquee({ brands, label }: Props) {
         aria-label={label}
       >
         <motion.div
+          ref={trackRef}
           className="flex w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: Math.max(12, brands.length * 4),
-              ease: "linear",
-            },
-          }}
+          // Right → left seamless loop
+          animate={shouldAnimate ? { x: [0, -loopWidth] } : { x: 0 }}
+          transition={
+            shouldAnimate
+              ? { duration, repeat: Infinity, ease: "linear" }
+              : { duration: 0 }
+          }
         >
           <BrandSet brands={brands} suffix="a" />
           <BrandSet brands={brands} suffix="b" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 
@@ -13,14 +13,54 @@ type Props = {
 };
 
 /**
- * Lightweight YouTube embed: poster first, iframe only after interaction.
+ * Lightweight YouTube embed: poster first, iframe loads when in view and autoplays muted.
+ * Falls back to click-to-play when prefers-reduced-motion is set.
  */
 export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const remotePoster = `https://i.ytimg.com/vi_webp/${videoId}/sddefault.webp`;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setActive(entry.isIntersecting);
+      },
+      { threshold: 0.4, rootMargin: "0px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [reduceMotion]);
+
+  const embedSrc = [
+    `https://www.youtube-nocookie.com/embed/${videoId}`,
+    `?autoplay=1`,
+    `&mute=1`,
+    `&playsinline=1`,
+    `&rel=0`,
+    `&modestbranding=1`,
+    `&loop=1`,
+    `&playlist=${videoId}`,
+  ].join("");
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "relative aspect-[16/10] w-full overflow-hidden rounded-[2px] bg-black",
         className,
@@ -29,7 +69,7 @@ export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props
       {active ? (
         <iframe
           title={title}
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+          src={embedSrc}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           className="absolute inset-0 h-full w-full border-0"

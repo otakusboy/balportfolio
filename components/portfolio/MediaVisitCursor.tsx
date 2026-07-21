@@ -19,8 +19,9 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
   const [active, setActive] = useState(false);
   const [finePointer, setFinePointer] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // Keep off-screen until the first real pointer position is known
+  const x = useMotionValue(-9999);
+  const y = useMotionValue(-9999);
 
   useEffect(() => {
     setMounted(true);
@@ -36,18 +37,27 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
     return () => setVisitCursorActive(false);
   }, [active]);
 
+  // mouseleave often misses when the card scrolls out from under the cursor
+  useEffect(() => {
+    if (!active) return;
+
+    const deactivate = () => setActive(false);
+    window.addEventListener("scroll", deactivate, true);
+    window.addEventListener("blur", deactivate);
+
+    return () => {
+      window.removeEventListener("scroll", deactivate, true);
+      window.removeEventListener("blur", deactivate);
+    };
+  }, [active]);
+
   const pill =
-    mounted && finePointer
+    mounted && finePointer && active
       ? createPortal(
           <motion.div
             className="pointer-events-none fixed z-[9999]"
             style={{ left: x, top: y, x: "-50%", y: "-50%" }}
             initial={false}
-            animate={{
-              opacity: active ? 1 : 0,
-              scale: active ? 1 : 0.82,
-            }}
-            transition={{ duration: 0 }}
             aria-hidden
           >
             <span className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-2 text-[13px] font-medium leading-none tracking-[-0.01em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
@@ -62,7 +72,12 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
   return (
     <div
       className={finePointer ? "relative cursor-none" : "relative"}
-      onMouseEnter={() => finePointer && setActive(true)}
+      onMouseEnter={(e) => {
+        if (!finePointer) return;
+        x.set(e.clientX);
+        y.set(e.clientY);
+        setActive(true);
+      }}
       onMouseLeave={() => setActive(false)}
       onMouseMove={(e) => {
         if (!finePointer) return;

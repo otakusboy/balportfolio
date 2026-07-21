@@ -4,7 +4,7 @@ import { profile } from "@/data/profile";
 
 export function ProfileSidebar() {
   return (
-    <div className="flex h-full flex-col justify-end px-6 pb-10 pt-6 sm:px-8 lg:px-10 lg:pb-8 lg:pt-8">
+    <div className="flex h-full w-full flex-col justify-end px-5 pb-6 pt-5 max-[399px]:px-4 lg:max-w-[500px] lg:px-6 lg:pb-6 lg:pt-6">
       <div className="flex flex-col gap-8">
         <div className="relative h-14 w-14">
           <Image

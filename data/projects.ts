@@ -11,7 +11,10 @@ import type { Project } from "@/types/project";
  * - editorial     Cover + optional second image from gallery[0]
  *
  * Media options:
- *   posterImage, mediaGradient, hidden
+ *   posterImage, mediaGradient, hidden, hideOnMobile
+ *
+ * hideOnMobile — set true to hide a card below the `lg` breakpoint
+ * (tablet/phone). Desktop still shows it. Default: shown everywhere.
  */
 export const projects: Project[] = [
   {
@@ -61,6 +64,7 @@ export const projects: Project[] = [
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
     pairWith: "charity-app",
+    hideOnMobile: true,
   },
   {
     id: "charity-app",
@@ -73,6 +77,7 @@ export const projects: Project[] = [
     mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
+    hideOnMobile: true,
   },
   {
     id: "chainly",
@@ -97,6 +102,7 @@ export const projects: Project[] = [
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "twoUp",
     pairWith: "velocity",
+    hideOnMobile: true,
   },
   {
     id: "velocity",
@@ -109,6 +115,7 @@ export const projects: Project[] = [
     mediaInsetRight: 20,
     externalUrl: "https://www.behance.net/iqbaldesign",
     layoutVariant: "deviceMockup",
+    hideOnMobile: true,
   },
   {
     id: "senior-cares",
