@@ -76,8 +76,8 @@ function DeviceCover({ project, priority }: { project: Project; priority?: boole
       priority={priority}
       aspectClass="aspect-[4/5] sm:aspect-[3/4]"
       sizes="(max-width: 640px) 100vw, 28vw"
-      fit="cover"
       {...projectCoverProps(project)}
+      fit="cover"
       originalSrc={project.mobileImage ?? project.originalImage}
       insetLeft={project.mediaInsetLeft ?? 0}
       insetRight={project.mediaInsetRight ?? 0}
