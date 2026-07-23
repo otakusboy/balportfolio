@@ -18,11 +18,11 @@ export function MainShell({ children }: Props) {
         </aside>
 
         <main
-          className="flex min-h-0 flex-1 flex-col bg-white pb-6 pt-4 min-[1301px]:h-full min-[1301px]:pb-0 min-[1301px]:pt-0 min-[1301px]:pl-5"
+          className="flex min-h-0 flex-1 flex-col bg-[var(--bg-main)] pb-6 pt-4 min-[1301px]:h-full min-[1301px]:pb-0 min-[1301px]:pt-0 min-[1301px]:pl-5"
           aria-label="Portfolio"
         >
           <div className="flex min-h-0 flex-1 flex-col min-[1301px]:m-4">
-            <div className="portfolio-scroll min-h-0 flex-1 overflow-y-auto p-8 min-[1301px]:rounded-[5px] min-[1301px]:border min-[1301px]:border-[var(--border-subtle)] min-[1301px]:bg-[#f8f9fc]">
+            <div className="portfolio-scroll min-h-0 flex-1 overflow-y-auto p-8 min-[1301px]:rounded-[5px] min-[1301px]:border min-[1301px]:border-[var(--border-subtle)] min-[1301px]:bg-[var(--bg-portfolio)]">
               {children}
             </div>
           </div>

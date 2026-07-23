@@ -1,7 +1,9 @@
+import { CARD_CORNERS } from "@/lib/card";
+import { cn } from "@/lib/cn";
 import type { Project } from "@/types/project";
 import { LiteYouTubeEmbed } from "@/components/portfolio/LiteYouTubeEmbed";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
-import { projectCoverProps, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL } from "@/lib/project-media";
+import { projectCoverProps } from "@/lib/project-media";
 import { DEVICE_IMAGE_SIZES } from "@/lib/image";
 
 type Props = {
@@ -28,19 +30,16 @@ export function PortfolioVariantRenderer({ project, priority }: Props) {
 
     case "editorial":
       return (
-        <div className="overflow-hidden rounded-[10px]">
+        <div className={cn("overflow-hidden", CARD_CORNERS)}>
           <WideCover project={project} priority={priority} alt={`${project.title} cover`} />
           {project.gallery?.[0] ? (
             <ProjectCover
+              {...projectCoverProps(project)}
+              coverSrc={undefined}
               originalSrc={project.gallery[0]}
               alt={`${project.title} detail`}
               aspectClass="aspect-[16/10]"
               className="border-t border-[var(--border-subtle)]"
-              insetLeft={project.mediaInsetLeft ?? DEFAULT_MEDIA_INSET}
-              insetRight={project.mediaInsetRight ?? DEFAULT_MEDIA_INSET}
-              insetTop={project.mediaInsetTop ?? DEFAULT_MEDIA_INSET_VERTICAL}
-              insetBottom={project.mediaInsetBottom ?? DEFAULT_MEDIA_INSET_VERTICAL}
-              gradient={project.mediaGradient}
             />
           ) : null}
         </div>
@@ -77,14 +76,14 @@ function DeviceCover({ project, priority }: { project: Project; priority?: boole
       priority={priority}
       aspectClass="aspect-[4/5] sm:aspect-[3/4]"
       sizes={DEVICE_IMAGE_SIZES}
-      {...projectCoverProps(project)}
-      fit="cover"
+      background={project.mediaBackground}
+      fit={project.mediaFit ?? "cover"}
       originalSrc={project.mobileImage ?? project.originalImage}
+      objectPosition={project.mediaObjectPosition ?? "left"}
       insetLeft={project.mediaInsetLeft ?? 0}
       insetRight={project.mediaInsetRight ?? 0}
       insetTop={project.mediaInsetTop ?? 0}
       insetBottom={project.mediaInsetBottom ?? 0}
-      objectPosition={project.mediaObjectPosition ?? "left"}
     />
   );
 }

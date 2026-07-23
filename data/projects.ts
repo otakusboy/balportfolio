@@ -12,10 +12,10 @@ import type { Project } from "@/types/project";
  *
  * Images:
  * - originalImage  Project image with inset padding (shown alone, or on hover)
- * - coverImage     Optional full-bleed cover shown before hover
+ * - coverImage     Optional full-bleed cover shown before hover (always fills the frame)
  *
  * Media options:
- * - mediaGradient         Custom background gradient (default: solid #eef2f6)
+ * - mediaBackground       Card frame background — hex/rgb or CSS gradient (default: #eef2f6)
  * - mediaInsetLeft/Right  Inset for originalImage only in px (default: 20)
  * - mediaInsetTop/Bottom   Inset for originalImage only in px (default: 0)
  * - mediaObjectPosition   How the image fills its frame (default: "top")
@@ -23,8 +23,11 @@ import type { Project } from "@/types/project";
  * - hidden                Remove from the list without deleting
  * - hideOnMobile          Hide at 1300px and below
  *
- * Dashboard / UI screenshots (e.g. Appreal):
- * Every card uses a fixed 16:11 frame with #eef2f6 background. The image sits
+ * mediaBackground examples:
+ *   mediaBackground: "#eef2f6"
+ *   mediaBackground: "linear-gradient(180deg, #eef2f6 0%, #dce4ec 100%)"
+ *
+ * Every card uses a fixed 16:11 frame with a default #eef2f6 background (override with mediaBackground).
  * inside with 20px left/right inset by default. For a single dashboard screen:
  *   mediaFit: "contain"
  *   mediaObjectPosition: "center"
@@ -70,29 +73,29 @@ export const projects: Project[] = [
     externalUrl: "https://veridoc-ai.netlify.app/",
     layoutVariant: "featuredWide",
   },
-  {
-    id: "calodrop",
-    title: "Calodrop",
-    subtitle: "iOS App Design",
-    year: "2026",
-    originalImage: "/images/projects/calodrop.png",
-    mobileImage: "/images/projects/calodrop.png",
-    layoutVariant: "twoUp",
-    pairWith: "charity-app",
-    hideOnMobile: true,
-    mediaObjectPosition: "center",
-  },
-  {
-    id: "charity-app",
-    title: "Charity App",
-    subtitle: "iOS App design",
-    year: "2024",
-    originalImage: "/images/projects/charity.png",
-    mobileImage: "/images/projects/charity.png",
-    externalUrl: "https://www.behance.net/iqbaldesign",
-    layoutVariant: "deviceMockup",
-    hideOnMobile: true,
-  },
+  // {
+  //   id: "calodrop",
+  //   title: "Calodrop",
+  //   subtitle: "iOS App Design",
+  //   year: "2026",
+  //   originalImage: "/images/projects/calodrop.png",
+  //   mobileImage: "/images/projects/calodrop.png",
+  //   layoutVariant: "twoUp",
+  //   pairWith: "charity-app",
+  //   hideOnMobile: true,
+  //   mediaObjectPosition: "center",
+  // },
+  // {
+  //   id: "charity-app",
+  //   title: "Charity App",
+  //   subtitle: "iOS App design",
+  //   year: "2024",
+  //   originalImage: "/images/projects/charity.png",
+  //   mobileImage: "/images/projects/charity.png",
+  //   externalUrl: "https://www.behance.net/iqbaldesign",
+  //   layoutVariant: "deviceMockup",
+  //   hideOnMobile: true,
+  // },
   {
     id: "chainly",
     title: "Chainly",
@@ -102,36 +105,42 @@ export const projects: Project[] = [
     externalUrl: "https://templates-chainly.framer.website/",
     layoutVariant: "featuredWide",
   },
-  {
-    id: "aimon",
-    title: "AIMON",
-    subtitle: "Habit tracker apps",
-    year: "2024",
-    originalImage: "/images/projects/aimon-mobile.png",
-    mobileImage: "/images/projects/aimon-mobile.png",
-    externalUrl: "https://www.behance.net/iqbaldesign",
-    layoutVariant: "twoUp",
-    pairWith: "velocity",
-    hideOnMobile: true,
-  },
-  {
-    id: "velocity",
-    title: "Velocity",
-    subtitle: "iOS App Design",
-    year: "2025",
-    originalImage: "/images/projects/velocity.png",
-    mobileImage: "/images/projects/velocity.png",
-    externalUrl: "https://www.behance.net/iqbaldesign",
-    layoutVariant: "deviceMockup",
-    hideOnMobile: true,
-  },
+  // {
+  //   id: "aimon",
+  //   title: "AIMON",
+  //   subtitle: "Habit tracker apps",
+  //   year: "2024",
+  //   originalImage: "/images/projects/aimon-mobile.png",
+  //   mobileImage: "/images/projects/aimon-mobile.png",
+  //   externalUrl: "https://www.behance.net/iqbaldesign",
+  //   layoutVariant: "twoUp",
+  //   pairWith: "velocity",
+  //   hideOnMobile: true,
+  // },
+  // {
+  //   id: "velocity",
+  //   title: "Velocity",
+  //   subtitle: "iOS App Design",
+  //   year: "2025",
+  //   originalImage: "/images/projects/velocity.png",
+  //   mobileImage: "/images/projects/velocity.png",
+  //   externalUrl: "https://www.behance.net/iqbaldesign",
+  //   layoutVariant: "deviceMockup",
+  //   hideOnMobile: true,
+  // },
   {
     id: "senior-cares",
     title: "Senior Cares",
     subtitle: "Work Case Study",
     year: "2025",
-    coverImage: "/images/projects/senior-cares.png",
+    // coverImage: "/images/projects/senior-cares.png",
     originalImage: "/images/projects/senior-cares.png",
+    mediaFit: "cover",
+    mediaObjectPosition: "center",
+    mediaInsetLeft: 0,
+    mediaInsetRight: 0,
+    mediaInsetTop: 30,
+    mediaInsetBottom: 0,
     externalUrl:
       "https://medium.com/@iqbalaqaba/ux-study-case-visual-refreshment-of-senior-care-website-61707ad2c3bd",
     layoutVariant: "editorial",
@@ -145,8 +154,8 @@ export const projects: Project[] = [
     layoutVariant: "featuredWide",
     mediaFit: "contain",
     mediaObjectPosition: "center",
-    mediaInsetTop: 40,
-    mediaInsetBottom: 40,
+    mediaInsetTop: 30,
+    mediaInsetBottom: 30,
   },
   {
     id: "housefresh",
@@ -162,6 +171,9 @@ export const projects: Project[] = [
     title: "Phoenix",
     subtitle: "AI property appraisal",
     year: "2024",
+    mediaFit: "contain",
+    mediaInsetTop: 40,
+    mediaInsetBottom: 40,
     coverImage: "/images/projects/extra-2.png",
     originalImage: "/images/projects/phoenix.png",
     externalUrl: "https://www.phoenixsoftware.io/real-estate-crm/",

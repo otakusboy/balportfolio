@@ -40,8 +40,11 @@ export type Project = {
   youtubeId?: string;
   /** Partner id for twoUp layouts */
   pairWith?: string;
-  /** Optional CSS gradient override; defaults to solid #eef2f6 when omitted */
-  mediaGradient?: string;
+  /**
+   * Card frame background — flat hex/rgb or CSS gradient. Default: #eef2f6.
+   * Examples: "#eef2f6", "linear-gradient(180deg, #eef2f6 0%, #dce4ec 100%)"
+   */
+  mediaBackground?: string;
   /** Inset for originalImage only (px). Default: 20 left/right, 0 top/bottom. Cover is always full bleed. */
   mediaInsetLeft?: number;
   mediaInsetRight?: number;
@@ -56,7 +59,8 @@ export type Project = {
   mediaObjectPosition?: MediaObjectPositionValue;
   /**
    * How the image scales inside its inset frame. Default: "cover" (fills & crops).
-   * Use "contain" for dashboard/UI screenshots — keeps aspect ratio, centered with side padding.
+   * Use "contain" for dashboard/UI screenshots — keeps ratio, centered with side padding.
+   * Applies to originalImage only; coverImage is always full-bleed cover.
    */
   mediaFit?: "cover" | "contain";
   /** Hide from the portfolio list without deleting */

@@ -9,6 +9,7 @@ export const profile: ProfileData = {
   avatar: "/images/profile/avatar.jpg",
   badge: "/images/profile/top-talent-badge.png",
 
+  /** Marquee logos load from `/public/images/brands/{number}.svg` — see `lib/brand-logos.ts` */
   brandsLabel: "Trusted by Leading Brands",
 
   socials: [
@@ -35,25 +36,6 @@ export const profile: ProfileData = {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/iqbalaqaba/",
       icon: "/images/social/linkedin.png",
-    },
-  ],
-
-  brands: [
-    // Swap `src` to a local file (e.g. "/images/brands/nobi.svg") when ready
-    {
-      id: "nobi",
-      name: "Nobi Asset Management",
-      src: "https://placehold.co/160x48",
-    },
-    {
-      id: "pluto",
-      name: "Pluto",
-      src: "https://placehold.co/160x48",
-    },
-    {
-      id: "appreal",
-      name: "Appreal",
-      src: "https://placehold.co/160x48",
     },
   ],
 };

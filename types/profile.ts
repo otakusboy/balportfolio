@@ -19,6 +19,5 @@ export type ProfileData = {
   avatar: string;
   badge?: string;
   socials: SocialLink[];
-  brands: BrandLogo[];
   brandsLabel: string;
 };

@@ -1,6 +1,7 @@
+import type { CSSProperties } from "react";
 import type { MediaObjectPosition, MediaObjectPositionValue, Project } from "@/types/project";
 
-export const DEFAULT_MEDIA_BACKGROUND = "#eef2f6";
+const DEFAULT_MEDIA_BACKGROUND = "#eef2f6";
 
 /** Default inset for originalImage (padded inside the frame). Cover is always full bleed. */
 export const DEFAULT_MEDIA_INSET = 20;
@@ -8,7 +9,7 @@ export const DEFAULT_MEDIA_INSET = 20;
 /** Default vertical inset for originalImage. Horizontal default is DEFAULT_MEDIA_INSET. */
 export const DEFAULT_MEDIA_INSET_VERTICAL = 0;
 
-export const DEFAULT_MEDIA_OBJECT_POSITION: MediaObjectPosition = "top";
+const DEFAULT_MEDIA_OBJECT_POSITION: MediaObjectPosition = "top";
 
 const OBJECT_POSITION_CLASS: Record<MediaObjectPosition, string> = {
   center: "object-center",
@@ -40,12 +41,23 @@ export function resolveObjectPosition(position?: MediaObjectPositionValue) {
   return { className: undefined, style: { objectPosition: value } as const };
 }
 
+/** Flat color or CSS gradient/image for the project card frame background. */
+export function resolveMediaBackground(background?: string): CSSProperties {
+  const value = background ?? DEFAULT_MEDIA_BACKGROUND;
+
+  if (/gradient|url\(/i.test(value)) {
+    return { backgroundImage: value };
+  }
+
+  return { backgroundColor: value };
+}
+
 /** Shared ProjectCover props derived from project data */
 export function projectCoverProps(project: Project) {
   return {
     coverSrc: project.coverImage,
     originalSrc: project.originalImage,
-    gradient: project.mediaGradient,
+    background: project.mediaBackground,
     insetLeft: project.mediaInsetLeft ?? DEFAULT_MEDIA_INSET,
     insetRight: project.mediaInsetRight ?? DEFAULT_MEDIA_INSET,
     insetTop: project.mediaInsetTop ?? DEFAULT_MEDIA_INSET_VERTICAL,

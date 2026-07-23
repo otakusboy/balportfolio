@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { BrandMarquee } from "@/components/layout/BrandMarquee";
 import { profile } from "@/data/profile";
+import { getBrandLogos } from "@/lib/brand-logos";
 import { IMAGE_QUALITY } from "@/lib/image";
 
 export function ProfileSidebar() {
+  const brands = getBrandLogos();
   return (
     <div className="flex h-full w-full flex-col px-5 pb-6 pt-5 max-[399px]:px-4 min-[1301px]:max-w-[500px] min-[1301px]:justify-end min-[1301px]:px-6 min-[1301px]:pb-6 min-[1301px]:pt-6">
       <div className="flex flex-col gap-8">
@@ -74,7 +76,7 @@ export function ProfileSidebar() {
           </div>
         </div>
 
-        <BrandMarquee brands={profile.brands} label={profile.brandsLabel} />
+        <BrandMarquee brands={brands} label={profile.brandsLabel} />
       </div>
     </div>
   );

@@ -2,20 +2,22 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import { CARD_CORNERS } from "@/lib/card";
 import { cn } from "@/lib/cn";
 import type { MediaObjectPositionValue } from "@/types/project";
-import { DEFAULT_MEDIA_BACKGROUND, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL, resolveObjectPosition } from "@/lib/project-media";
-import { DEVICE_IMAGE_SIZES, IMAGE_QUALITY, PORTFOLIO_IMAGE_SIZES } from "@/lib/image";
-
-/** High-quality delivery for portfolio covers (AVIF/WebP via next/image). */
+import {
+  DEFAULT_MEDIA_INSET,
+  DEFAULT_MEDIA_INSET_VERTICAL,
+  resolveMediaBackground,
+  resolveObjectPosition,
+} from "@/lib/project-media";
+import { IMAGE_QUALITY, PORTFOLIO_IMAGE_SIZES } from "@/lib/image";
 
 type Props = {
-  /** Full-bleed cover shown before hover (optional) */
   coverSrc?: string;
-  /** Original project image — padded inset; shown on hover or alone */
   originalSrc: string;
   alt: string;
-  gradient?: string;
+  background?: string;
   priority?: boolean;
   sizes?: string;
   aspectClass?: string;
@@ -26,14 +28,13 @@ type Props = {
   insetTop?: number;
   insetBottom?: number;
   className?: string;
-  imageClassName?: string;
 };
 
 export function ProjectCover({
   coverSrc,
   originalSrc,
   alt,
-  gradient,
+  background,
   priority = false,
   sizes = PORTFOLIO_IMAGE_SIZES,
   aspectClass = "aspect-[16/11]",
@@ -44,41 +45,27 @@ export function ProjectCover({
   insetTop = DEFAULT_MEDIA_INSET_VERTICAL,
   insetBottom = DEFAULT_MEDIA_INSET_VERTICAL,
   className,
-  imageClassName,
 }: Props) {
-  const fitClass = fit === "contain" ? "object-contain" : "object-cover";
+  const originalFitClass = fit === "contain" ? "object-contain" : "object-cover";
   const { className: positionClass, style: positionStyle } = resolveObjectPosition(objectPosition);
-
   const hasCover = Boolean(coverSrc);
   const reduceMotion = useReducedMotion();
   const zoomOnHover = !hasCover && !reduceMotion;
 
-  const backgroundStyle = gradient
-    ? { backgroundImage: gradient }
-    : { backgroundColor: DEFAULT_MEDIA_BACKGROUND };
-
-  const imageProps = {
-    sizes,
-    fitClass,
-    positionClass,
-    positionStyle,
-    imageClassName,
-  };
-
   return (
     <div
-      className={cn("relative w-full overflow-hidden rounded-[10px]", aspectClass, className)}
-      style={backgroundStyle}
+      className={cn("relative w-full overflow-hidden", CARD_CORNERS, aspectClass, className)}
+      style={resolveMediaBackground(background)}
     >
       {hasCover ? (
-        <div className="absolute inset-0 z-10 group-hover:hidden">
-          <CoverImage src={coverSrc!} alt="" {...imageProps} />
+        <div className="absolute inset-0 z-10 overflow-hidden group-hover:hidden">
+          <CoverImage src={coverSrc!} alt="" sizes={sizes} fillCover />
         </div>
       ) : null}
 
       <motion.div
         className={cn(
-          "absolute origin-center",
+          "absolute inset-0 origin-center",
           hasCover && "z-0 hidden group-hover:block",
         )}
         style={{
@@ -91,12 +78,15 @@ export function ProjectCover({
         whileHover={zoomOnHover ? { scale: 1.05 } : undefined}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <div className="absolute inset-0">
+        <div className="relative size-full">
           <CoverImage
             src={originalSrc}
             alt={alt}
+            sizes={sizes}
             priority={priority}
-            {...imageProps}
+            fitClass={originalFitClass}
+            positionClass={positionClass}
+            positionStyle={positionStyle}
           />
         </div>
       </motion.div>
@@ -109,19 +99,19 @@ function CoverImage({
   alt,
   sizes,
   priority = false,
-  fitClass,
+  fillCover = false,
+  fitClass = "object-cover",
   positionClass,
   positionStyle,
-  imageClassName,
 }: {
   src: string;
   alt: string;
   sizes: string;
   priority?: boolean;
-  fitClass: string;
+  fillCover?: boolean;
+  fitClass?: string;
   positionClass?: string;
   positionStyle?: { objectPosition: string };
-  imageClassName?: string;
 }) {
   return (
     <Image
@@ -132,8 +122,8 @@ function CoverImage({
       quality={IMAGE_QUALITY}
       priority={priority}
       loading={priority ? undefined : "lazy"}
-      className={cn(fitClass, positionClass, imageClassName)}
-      style={positionStyle}
+      className={cn(fitClass, fillCover ? "object-top" : positionClass)}
+      style={fillCover ? undefined : positionStyle}
       aria-hidden={alt === ""}
     />
   );

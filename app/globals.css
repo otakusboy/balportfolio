@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 :root {
+  /* Page & pane backgrounds (card/media fill stays in lib/project-media.ts) */
   --bg: #fafafa;
   --bg-sidebar: #ffffff;
+  --bg-main: #ffffff;
+  --bg-portfolio: #f8f9fc;
+
+  /* Interactive surfaces */
   --surface: #ffffff;
   --surface-hover: #f7f8f9;
+
+  /* Text */
   --text: #1f2939;
   --text-secondary: #6b7280;
   --text-muted: #8b95a5;
   --text-faint: #99a3b2;
   --text-button: #354152;
+
+  /* Borders */
   --border: #e5e7eb;
   --border-subtle: #eceef1;
+  --border-contact: #e3e3e3;
+
+  /* Focus & chrome */
   --focus: #1f2939;
   --scrollbar: #c5cbd3;
   --scrollbar-track: transparent;
+  --card-radius: 10px;
 }
 
 @theme inline {
   --font-sans: var(--font-inter);
-  --color-background: var(--bg);
-  --color-foreground: var(--text);
 }
 
 html {
@@ -41,7 +52,7 @@ html.has-site-cursor * {
   cursor: none !important;
 }
 
-/* Minimal right-pane scrollbar (desktop workspace) */
+/* Portfolio scroll pane */
 .portfolio-scroll {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar) var(--scrollbar-track);
@@ -52,7 +63,7 @@ html.has-site-cursor * {
 }
 
 .portfolio-scroll::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track);
 }
 
 .portfolio-scroll::-webkit-scrollbar-thumb {
@@ -63,7 +74,6 @@ html.has-site-cursor * {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -74,18 +84,12 @@ html.has-site-cursor * {
   }
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+.btn-contact {
+  border: 1.5px solid var(--border-contact);
 }
 
-.btn-contact {
-  border: 1.5px solid #e3e3e3;
+/* Portfolio cards — continuous corners (Figma-style smoothing via squircle) */
+.rounded-card {
+  border-radius: var(--card-radius);
+  corner-shape: squircle;
 }

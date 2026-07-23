@@ -4,6 +4,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion, useMotionValue } from "motion/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
+import { cn } from "@/lib/cn";
 import { setVisitCursorActive } from "@/components/cursor/SiteCursor";
 import {
   FINE_POINTER_QUERY,
@@ -13,11 +14,10 @@ import {
 
 type Props = {
   children: ReactNode;
-  label?: string;
 };
 
 /** Replaces the cursor over linked project media with a “Visit Website” pill. */
-export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
+export function MediaVisitCursor({ children }: Props) {
   const mounted = useIsClient();
   const finePointer = useMediaQuery(FINE_POINTER_QUERY);
   const [active, setActive] = useState(false);
@@ -53,7 +53,7 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
           aria-hidden
         >
           <span className="inline-flex items-center gap-1.5 rounded-full bg-black px-3.5 py-3 text-[13px] font-medium leading-none tracking-[-0.01em] text-white shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
-            {label}
+            Visit Website
             <ArrowUpRight size={12} weight="bold" aria-hidden />
           </span>
         </motion.div>,
@@ -63,7 +63,7 @@ export function MediaVisitCursor({ children, label = "Visit Website" }: Props) {
 
   return (
     <div
-      className={finePointer ? "relative cursor-none" : "relative"}
+      className={cn("relative", finePointer && "cursor-none")}
       onMouseEnter={(e) => {
         if (!finePointer) return;
         x.set(e.clientX);

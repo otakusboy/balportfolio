@@ -2,35 +2,30 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useReducedMotion } from "motion/react";
 import { IMAGE_QUALITY, HERO_IMAGE_SIZES } from "@/lib/image";
+import { CARD_CORNERS } from "@/lib/card";
 import { cn } from "@/lib/cn";
-import { useMediaQuery } from "@/lib/use-media-query";
 
 type Props = {
   videoId: string;
   title: string;
-  className?: string;
-  /** Local fallback thumbnail when available */
   posterSrc?: string;
 };
 
-/**
- * Muted autoplay YouTube embed — loads immediately and keeps looping.
- * Falls back to click-to-play when prefers-reduced-motion is set.
- */
-export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props) {
+/** Muted autoplay YouTube embed — loads immediately and keeps looping. */
+export function LiteYouTubeEmbed({ videoId, title, posterSrc }: Props) {
   const [manualPlay, setManualPlay] = useState(false);
-  const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const reduceMotion = useReducedMotion();
   const active = !reduceMotion || manualPlay;
   const remotePoster = `https://i.ytimg.com/vi_webp/${videoId}/sddefault.webp`;
-
   const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=${videoId}`;
 
   return (
     <div
       className={cn(
-        "relative aspect-[16/10] w-full overflow-hidden rounded-[10px] bg-black",
-        className,
+        "relative aspect-[16/10] w-full overflow-hidden bg-black",
+        CARD_CORNERS,
       )}
     >
       {active ? (
@@ -61,7 +56,7 @@ export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props
             className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.02]"
             priority
           />
-          <span className="absolute inset-0 rounded-[10px] bg-black/20" aria-hidden="true" />
+          <span className={cn("absolute inset-0 bg-black/20", CARD_CORNERS)} aria-hidden="true" />
           <span
             className="absolute left-1/2 top-1/2 flex h-12 w-[68px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[14px] bg-[#ff0033] shadow-lg transition-transform motion-safe:group-hover:scale-105"
             aria-hidden="true"

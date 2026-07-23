@@ -1,6 +1,7 @@
 "use client";
 
 import type { Project } from "@/types/project";
+import { CARD_CORNERS } from "@/lib/card";
 import { cn } from "@/lib/cn";
 import { MediaVisitCursor } from "@/components/portfolio/MediaVisitCursor";
 import { PortfolioMeta } from "@/components/portfolio/PortfolioMeta";
@@ -39,25 +40,22 @@ export function PortfolioCard({ project, pair, priority }: Props) {
 function LinkedItem({ project, priority }: { project: Project; priority?: boolean }) {
   const mobileClass = project.hideOnMobile ? "max-[1300px]:hidden" : undefined;
   const linked = hasExternalLink(project);
+  const media = <PortfolioVariantRenderer project={project} priority={priority} />;
 
   if (project.youtubeId) {
     return (
       <article className={mobileClass}>
-        <PortfolioVariantRenderer project={project} priority={priority} />
+        {media}
         <PortfolioMeta project={project} />
       </article>
     );
   }
 
-  const media = <PortfolioVariantRenderer project={project} priority={priority} />;
-
   if (!linked) {
     return (
       <article className={mobileClass}>
-        <div className="group block rounded-[10px]">
-          {media}
-          <PortfolioMeta project={project} />
-        </div>
+        <div className="group block">{media}</div>
+        <PortfolioMeta project={project} />
       </article>
     );
   }
@@ -68,7 +66,10 @@ function LinkedItem({ project, priority }: { project: Project; priority?: boolea
         href={project.externalUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group block rounded-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
+        className={cn(
+          "group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]",
+          CARD_CORNERS,
+        )}
         aria-label={`${project.title} — opens in a new tab`}
       >
         <MediaVisitCursor>{media}</MediaVisitCursor>
