@@ -21,7 +21,7 @@ import type { Project } from "@/types/project";
  * - mediaObjectPosition   How the image fills its frame (default: "top")
  * - mediaFit              "cover" (default, fills & crops) or "contain" (keeps ratio)
  * - hidden                Remove from the list without deleting
- * - hideOnMobile          Hide below the `lg` breakpoint
+ * - hideOnMobile          Hide at 1300px and below
  *
  * Dashboard / UI screenshots (e.g. Appreal):
  * Every card uses a fixed 16:11 frame with #eef2f6 background. The image sits
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     layoutVariant: "twoUp",
     pairWith: "charity-app",
     hideOnMobile: true,
-    mediaObjectPosition: ["right", "bottom"],
+    mediaObjectPosition: "center",
   },
   {
     id: "charity-app",

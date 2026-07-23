@@ -5,9 +5,9 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
 import type { MediaObjectPositionValue } from "@/types/project";
 import { DEFAULT_MEDIA_BACKGROUND, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL, resolveObjectPosition } from "@/lib/project-media";
+import { DEVICE_IMAGE_SIZES, IMAGE_QUALITY, PORTFOLIO_IMAGE_SIZES } from "@/lib/image";
 
 /** High-quality delivery for portfolio covers (AVIF/WebP via next/image). */
-const COVER_IMAGE_QUALITY = 90;
 
 type Props = {
   /** Full-bleed cover shown before hover (optional) */
@@ -35,7 +35,7 @@ export function ProjectCover({
   alt,
   gradient,
   priority = false,
-  sizes = "(max-width: 1024px) 100vw, 58vw",
+  sizes = PORTFOLIO_IMAGE_SIZES,
   aspectClass = "aspect-[16/11]",
   fit = "cover",
   objectPosition,
@@ -129,7 +129,7 @@ function CoverImage({
       alt={alt}
       fill
       sizes={sizes}
-      quality={COVER_IMAGE_QUALITY}
+      quality={IMAGE_QUALITY}
       priority={priority}
       loading={priority ? undefined : "lazy"}
       className={cn(fitClass, positionClass, imageClassName)}

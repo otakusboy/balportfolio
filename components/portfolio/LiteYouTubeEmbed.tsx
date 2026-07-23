@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { IMAGE_QUALITY, HERO_IMAGE_SIZES } from "@/lib/image";
 import { cn } from "@/lib/cn";
 import { useMediaQuery } from "@/lib/use-media-query";
 
@@ -55,7 +56,8 @@ export function LiteYouTubeEmbed({ videoId, title, className, posterSrc }: Props
             src={posterSrc ?? remotePoster}
             alt=""
             fill
-            sizes="(max-width: 1024px) 100vw, 60vw"
+            sizes={HERO_IMAGE_SIZES}
+            quality={IMAGE_QUALITY}
             className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.02]"
             priority
           />

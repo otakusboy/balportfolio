@@ -62,7 +62,7 @@ export type Project = {
   /** Hide from the portfolio list without deleting */
   hidden?: boolean;
   /**
-   * Hide this card on tablet/mobile (below `lg`).
+   * Hide this card on tablet/mobile/laptop (1300px and below).
    * Still visible on desktop. Defaults to false (shown).
    */
   hideOnMobile?: boolean;

@@ -2,6 +2,7 @@ import type { Project } from "@/types/project";
 import { LiteYouTubeEmbed } from "@/components/portfolio/LiteYouTubeEmbed";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
 import { projectCoverProps, DEFAULT_MEDIA_INSET, DEFAULT_MEDIA_INSET_VERTICAL } from "@/lib/project-media";
+import { DEVICE_IMAGE_SIZES } from "@/lib/image";
 
 type Props = {
   project: Project;
@@ -75,7 +76,7 @@ function DeviceCover({ project, priority }: { project: Project; priority?: boole
       alt={`${project.title} device preview`}
       priority={priority}
       aspectClass="aspect-[4/5] sm:aspect-[3/4]"
-      sizes="(max-width: 640px) 100vw, 28vw"
+      sizes={DEVICE_IMAGE_SIZES}
       {...projectCoverProps(project)}
       fit="cover"
       originalSrc={project.mobileImage ?? project.originalImage}

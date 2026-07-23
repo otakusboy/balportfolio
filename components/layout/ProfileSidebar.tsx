@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { BrandMarquee } from "@/components/layout/BrandMarquee";
 import { profile } from "@/data/profile";
+import { IMAGE_QUALITY } from "@/lib/image";
 
 export function ProfileSidebar() {
   return (
-    <div className="flex h-full w-full flex-col px-5 pb-6 pt-5 max-[399px]:px-4 lg:max-w-[500px] lg:justify-end lg:px-6 lg:pb-6 lg:pt-6">
+    <div className="flex h-full w-full flex-col px-5 pb-6 pt-5 max-[399px]:px-4 min-[1301px]:max-w-[500px] min-[1301px]:justify-end min-[1301px]:px-6 min-[1301px]:pb-6 min-[1301px]:pt-6">
       <div className="flex flex-col gap-8">
         <div>
           <div className="relative h-14 w-14">
@@ -13,6 +14,7 @@ export function ProfileSidebar() {
               alt={`${profile.name} portrait`}
               width={56}
               height={56}
+              quality={IMAGE_QUALITY}
               className="h-14 w-14 rounded-full object-cover shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
               priority
             />
@@ -22,6 +24,7 @@ export function ProfileSidebar() {
                 alt="Top Rated talent badge"
                 width={22}
                 height={22}
+                quality={IMAGE_QUALITY}
                 className="absolute -bottom-0.5 -right-0.5 h-[22px] w-[22px]"
               />
             ) : null}
@@ -61,6 +64,7 @@ export function ProfileSidebar() {
                       alt=""
                       width={30}
                       height={30}
+                      quality={IMAGE_QUALITY}
                       className="h-[30px] w-[30px] object-cover"
                     />
                   </a>

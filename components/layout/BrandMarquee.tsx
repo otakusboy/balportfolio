@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import type { BrandLogo } from "@/types/profile";
+import { IMAGE_QUALITY } from "@/lib/image";
 
 type Props = {
   brands: BrandLogo[];
@@ -14,14 +16,15 @@ function BrandSet({ brands, suffix }: { brands: BrandLogo[]; suffix: string }) {
     <ul className="flex shrink-0 items-center gap-6 pr-6" aria-hidden={suffix !== "a"}>
       {brands.map((brand) => (
         <li key={`${brand.id}-${suffix}`} className="opacity-50 grayscale">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={brand.src}
             alt={suffix === "a" ? brand.name : ""}
             width={160}
             height={40}
+            quality={IMAGE_QUALITY}
             className="h-10 max-h-10 w-auto max-w-40 shrink-0 object-contain"
             draggable={false}
+            aria-hidden={suffix !== "a"}
           />
         </li>
       ))}

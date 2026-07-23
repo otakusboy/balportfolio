@@ -24,7 +24,7 @@ export function PortfolioCard({ project, pair, priority }: Props) {
       <div
         className={cn(
           "grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-5",
-          bothHiddenOnMobile && "max-lg:hidden",
+          bothHiddenOnMobile && "max-[1300px]:hidden",
         )}
       >
         <LinkedItem project={{ ...project, layoutVariant: "deviceMockup" }} priority={priority} />
@@ -37,7 +37,7 @@ export function PortfolioCard({ project, pair, priority }: Props) {
 }
 
 function LinkedItem({ project, priority }: { project: Project; priority?: boolean }) {
-  const mobileClass = project.hideOnMobile ? "max-lg:hidden" : undefined;
+  const mobileClass = project.hideOnMobile ? "max-[1300px]:hidden" : undefined;
   const linked = hasExternalLink(project);
 
   if (project.youtubeId) {
