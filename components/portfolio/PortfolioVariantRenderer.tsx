@@ -1,7 +1,7 @@
 import { CARD_CORNERS } from "@/lib/card";
 import { cn } from "@/lib/cn";
 import type { Project } from "@/types/project";
-import { LiteYouTubeEmbed } from "@/components/portfolio/LiteYouTubeEmbed";
+import { ProjectVideoHero } from "@/components/portfolio/ProjectVideoHero";
 import { ProjectCover } from "@/components/portfolio/ProjectCover";
 import { projectCoverProps } from "@/lib/project-media";
 import { DEVICE_IMAGE_SIZES } from "@/lib/image";
@@ -15,8 +15,7 @@ export function PortfolioVariantRenderer({ project, priority }: Props) {
   switch (project.layoutVariant) {
     case "videoHero":
       return (
-        <LiteYouTubeEmbed
-          videoId={project.youtubeId ?? ""}
+        <ProjectVideoHero
           title={project.title}
           posterSrc={project.originalImage}
         />

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withNextVideo } from "next-video/process";
 
 const nextConfig: NextConfig = {
   images: {
@@ -12,17 +13,21 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "i.ytimg.com",
-      },
-      {
-        protocol: "https",
-        hostname: "img.youtube.com",
-      },
-    ],
   },
 };
 
-export default nextConfig;
+export default withNextVideo(nextConfig, {
+  provider: "mux",
+  providerConfig: {
+    mux: {
+      generateAssetKey: undefined,
+      videoQuality: "plus",
+      newAssetSettings: {
+        "videos/*.mp4": {
+          videoQuality: "plus",
+          maxResolutionTier: "1080p",
+        },
+      },
+    },
+  },
+});

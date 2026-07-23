@@ -42,7 +42,7 @@ function LinkedItem({ project, priority }: { project: Project; priority?: boolea
   const linked = hasExternalLink(project);
   const media = <PortfolioVariantRenderer project={project} priority={priority} />;
 
-  if (project.youtubeId) {
+  if (project.layoutVariant === "videoHero") {
     return (
       <article className={mobileClass}>
         {media}

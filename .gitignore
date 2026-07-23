@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# next-video — keep source mp4s out of git; commit the generated *.json maps
+/videos/*
+!/videos/*.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -4,7 +4,7 @@ import type { Project } from "@/types/project";
  * Portfolio data — edit here to change what appears on the site.
  *
  * Layout variants:
- * - videoHero     YouTube embed (set youtubeId)
+ * - videoHero     Self-hosted video in /videos (imported in ProjectVideoHero)
  * - featuredWide  Single wide image
  * - deviceMockup  Tall device frame (optional mobileImage)
  * - twoUp         Two device frames side by side (set pairWith)
@@ -52,7 +52,6 @@ export const projects: Project[] = [
     originalImage: "/images/projects/landing-page-works.jpg",
     externalUrl: "https://www.youtube.com/watch?v=BpOYC8AsUpE",
     layoutVariant: "videoHero",
-    youtubeId: "BpOYC8AsUpE",
   },
   {
     id: "circles",

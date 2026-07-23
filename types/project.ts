@@ -37,7 +37,6 @@ export type Project = {
   coverImage?: string;
   mobileImage?: string;
   gallery?: string[];
-  youtubeId?: string;
   /** Partner id for twoUp layouts */
   pairWith?: string;
   /**
