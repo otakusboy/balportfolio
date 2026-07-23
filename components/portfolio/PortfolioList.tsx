@@ -8,7 +8,7 @@ export function PortfolioList() {
   const items = getRenderableProjects();
 
   return (
-    <div id="portfolio-top" className="flex flex-col gap-10">
+    <div id="portfolio-top" className="flex flex-col gap-6 min-[1301px]:gap-9">
       {items.map((project, index) => {
         const pair =
           project.layoutVariant === "twoUp" && project.pairWith
